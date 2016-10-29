@@ -13,10 +13,20 @@ namespace _01WebReqAndWebRes
             OpenRead();
             Console.Read();
         }
+        #region 01.如何请求Web页并以流的形式检索结果
+        static void OpenRead()
+        {
+            using (WebClient myClient = new WebClient())
+            using (Stream response = myClient.OpenRead("http://www.baidu.com"))
+            using (StreamReader reader = new StreamReader(response, Encoding.UTF8))
+            {
+                string responseFromServer = reader.ReadToEnd();
+                Console.WriteLine(responseFromServer);
+            }
+        }
+        #endregion
 
-        /// <summary>
-        /// 方法一
-        /// </summary>
+        #region 02.如何使用WebRequest类请求数据
         static void GetResponse()
         {
             // 为指定的URI方案初始化一个WebRequest实例
@@ -37,19 +47,8 @@ namespace _01WebReqAndWebRes
                 Console.WriteLine(responseFromServer);
             }
         }
+        #endregion
 
-        /// <summary>
-        /// 请求Web页并以流的形式检索结果
-        /// </summary>
-        static void OpenRead()
-        {
-            using (WebClient myClient = new WebClient())
-            using (Stream response = myClient.OpenRead("http://www.baidu.com"))
-            using (StreamReader reader = new StreamReader(response, Encoding.UTF8))
-            {
-                string responseFromServer = reader.ReadToEnd();
-                Console.WriteLine(responseFromServer);
-            }
-        }
+
     }
 }
